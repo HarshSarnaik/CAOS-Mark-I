@@ -325,4 +325,4 @@ Extraction reverses the process using the same key (iteration count).
 
 ## License
 
-MIT — Built for the Google Solutions Challenge 2024.
+MIT — Built for the Google Solutions Challenge 2026.
