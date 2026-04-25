@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base reset ───────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-surface-900 text-white font-sans;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(66,133,244,0.12), transparent),
+      radial-gradient(ellipse 50% 60% at 90% 110%, rgba(52,168,83,0.07), transparent);
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-surface-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-surface-600 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-surface-500; }
+}
+
+/* ── Component utilities ─────────────────────────────────────────────────── */
+@layer components {
+
+  /* Glass card */
+  .glass-card {
+    @apply bg-surface-800/60 backdrop-blur-md border border-surface-700/60
+           rounded-2xl shadow-glass;
+  }
+
+  /* Gradient border (pseudo-element trick) */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gradient-border:hover::before { opacity: 1; }
+
+  /* Shimmer loading skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      theme('colors.surface.700') 25%,
+      theme('colors.surface.600') 50%,
+      theme('colors.surface.700') 75%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-xl;
+  }
+
+  /* Google-coloured spinner */
+  .caos-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid transparent;
+    border-top-color: #4285F4;
+    border-right-color: #EA4335;
+    border-bottom-color: #FBBC05;
+    border-left-color: #34A853;
+    border-radius: 50%;
+    @apply animate-spin;
+  }
+
+  /* Pill button */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
+           text-sm text-white transition-all duration-200
+           bg-google-blue hover:bg-blue-500 active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
+           text-sm text-surface-300 border border-surface-600
+           hover:border-surface-400 hover:text-white transition-all duration-200
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Risk badge base */
+  .risk-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
+           text-xs font-bold tracking-wide uppercase;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full bg-surface-700/60 border border-surface-600 rounded-xl
+           px-4 py-3 text-sm text-white placeholder-surface-400
+           focus:outline-none focus:ring-2 focus:ring-google-blue/50 focus:border-google-blue
+           transition-all duration-200;
+  }
+}
+
+/* ── Radar sweep animation ───────────────────────────────────────────────── */
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.radar-sweep {
+  animation: radar-sweep 4s linear infinite;
+  transform-origin: center center;
+}
+
+/* ── Staggered fade-in for event cards ──────────────────────────────────── */
+.event-card-enter {
+  animation: fade-in-up 0.35s ease-out both;
+}
+
+/* ── Glowing dot pulse ───────────────────────────────────────────────────── */
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.7; }
+}
+.dot-pulse { animation: dot-pulse 1.8s ease-in-out infinite; }
