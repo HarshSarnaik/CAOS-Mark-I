@@ -1,6 +1,10 @@
 # Core web framework
-fastapi==0.111.0
+fastapi==0.115.0
 uvicorn[standard]==0.30.1
+
+# Pydantic — pin to wheel-only versions (no Rust build)
+pydantic==2.9.2
+pydantic-core==2.23.4
 
 # Multipart file uploads
 python-multipart==0.0.9
@@ -20,5 +24,5 @@ google-cloud-firestore==2.16.0
 # Configuration
 python-dotenv==1.0.1
 
-# Type hints (Python < 3.11 compat)
+# Type hints
 typing-extensions==4.12.2
