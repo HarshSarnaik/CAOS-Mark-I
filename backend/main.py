@@ -16,6 +16,11 @@ import uuid
 from datetime import datetime, timezone
 
 from dotenv import load_dotenv
+
+# Load .env BEFORE importing local modules so that module-level constants
+# like LOCAL_FALLBACK in storage.py are evaluated with the correct values.
+load_dotenv()
+
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
@@ -23,8 +28,6 @@ from fastapi.responses import JSONResponse, Response
 import caos_core
 import forensics
 import storage
-
-load_dotenv()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # App setup
